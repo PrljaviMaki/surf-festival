@@ -1,0 +1,258 @@
+import React, { useState } from 'react';
+import { Music, Users, MapPin, Camera, Calendar, Ticket, X, ChevronRight } from 'lucide-react';
+
+const SurfFestivalApp = () => {
+  const [activeTab, setActiveTab] = useState('home');
+  const [showTickets, setShowTickets] = useState(false);
+
+  const artists = [
+    "THEO PARRISH", "LEON VYNEHALL", "DJ PYTHON", "CHAOS IN THE CBD",
+    "BRADLEY ZERO", "JAMES MASSIAH", "ADRIATIC SOCIAL CLUB", "DINA JASHARI",
+    "FENNA FICTION", "FUJCINELA BOYS", "KARIM SEMIN", "KIKELOMO",
+    "KOI KOI", "LIVWUTANG", "NEVENA JEREMIĆ", "SZCH",
+    "TIJANA T", "VIZELJ", "ADA LUVV", "BABYSCHON",
+    "CHARLIE BONES", "DO THE MATH", "JASA BUZINEL", "KOKOSY",
+    "LIFE CLASSICS", "LOW KI", "MAŠA", "MIMA I ZAZI",
+    "NEMANJA", "NIKOLA VEMIC", "OK WILLIAMS", "OLGICA",
+    "OMOLOKO", "PHILLIE P", "PRAKTIKAL", "RH SPACE ORCHESTRA",
+    "ROZALY", "SPACEWALKER", "TARSZA"
+  ];
+
+  return (
+    <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-cyan-400 via-yellow-300 to-red-400">
+      {/* Animated Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-red-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 w-80 h-80 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative h-full flex flex-col">
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto pb-20">
+          {activeTab === 'home' && <HomeTab onTicketClick={() => setShowTickets(true)} />}
+          {activeTab === 'lineup' && <LineupTab artists={artists} />}
+          {activeTab === 'info' && <InfoTab />}
+          {activeTab === 'gallery' && <GalleryTab />}
+        </div>
+
+        {/* Bottom Navigation */}
+        <nav className="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-200 pb-6 pt-2">
+          <div className="flex justify-around px-4">
+            <NavButton icon={Music} label="Home" active={activeTab === 'home'} onClick={() => setActiveTab('home')} />
+            <NavButton icon={Users} label="Lineup" active={activeTab === 'lineup'} onClick={() => setActiveTab('lineup')} />
+            <NavButton icon={MapPin} label="Info" active={activeTab === 'info'} onClick={() => setActiveTab('info')} />
+            <NavButton icon={Camera} label="Gallery" active={activeTab === 'gallery'} onClick={() => setActiveTab('gallery')} />
+          </div>
+        </nav>
+      </div>
+
+      {/* Ticket Modal */}
+      {showTickets && <TicketModal onClose={() => setShowTickets(false)} />}
+    </div>
+  );
+};
+
+const HomeTab = ({ onTicketClick }) => (
+  <div className="p-4 pt-12">
+    {/* Hero Card */}
+    <div className="relative h-96 rounded-3xl overflow-hidden mb-6 shadow-2xl">
+      <img 
+        src="https://i.postimg.cc/zX6z1Qsk/000053.jpg" 
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <div className="w-40 h-20 mb-4">
+          <svg viewBox="0 0 400 200" className="w-full h-full drop-shadow-lg">
+            <ellipse cx="200" cy="100" rx="190" ry="90" fill="#2D2D2D"/>
+            <text x="60" y="130" fill="#6DB3D3" fontSize="80" fontWeight="bold" fontFamily="Arial">SURF</text>
+          </svg>
+        </div>
+        <p className="text-white text-xl font-bold tracking-widest">JUNE 25—28, 2026</p>
+        <p className="text-white/90 text-sm tracking-wider">PUNAT / KRK / CROATIA</p>
+      </div>
+    </div>
+
+    {/* Info Cards */}
+    <div className="space-y-3 mb-6">
+      <div className="bg-white/40 backdrop-blur-xl rounded-2xl p-4 flex items-center gap-4">
+        <Calendar className="text-blue-600 flex-shrink-0" size={28} />
+        <div>
+          <p className="font-bold text-gray-900">Festival Dates</p>
+          <p className="text-sm text-gray-700">June 25-28, 2026</p>
+        </div>
+      </div>
+      
+      <div className="bg-white/40 backdrop-blur-xl rounded-2xl p-4 flex items-center gap-4">
+        <MapPin className="text-yellow-600 flex-shrink-0" size={28} />
+        <div>
+          <p className="font-bold text-gray-900">Location</p>
+          <p className="text-sm text-gray-700">Punat, Island of Krk</p>
+        </div>
+      </div>
+
+      <div className="bg-white/40 backdrop-blur-xl rounded-2xl p-4 flex items-center gap-4">
+        <Music className="text-red-600 flex-shrink-0" size={28} />
+        <div>
+          <p className="font-bold text-gray-900">39 Artists</p>
+          <p className="text-sm text-gray-700">Regional & Global</p>
+        </div>
+      </div>
+    </div>
+
+    {/* CTA */}
+    <button 
+      onClick={onTicketClick}
+      className="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-lg shadow-xl mb-6"
+    >
+      Get Tickets
+    </button>
+
+    {/* About */}
+    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-6">
+      <h2 className="text-2xl font-bold mb-3 text-gray-900">About SURF</h2>
+      <p className="text-gray-800 leading-relaxed">
+        A new festival on Croatia's coastline, blending musical discovery with the laid-back charm of a seaside holiday. 
+        Four days of celebration on the beautiful island of Krk.
+      </p>
+    </div>
+  </div>
+);
+
+const LineupTab = ({ artists }) => (
+  <div className="p-4 pt-12">
+    <h1 className="text-4xl font-bold mb-6 text-gray-900">Lineup 2026</h1>
+    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-4">
+      <div className="space-y-2">
+        {artists.map((artist, i) => (
+          <div 
+            key={i}
+            className="bg-white/50 rounded-xl p-4 flex justify-between items-center"
+          >
+            <span className="font-semibold text-gray-900">{artist}</span>
+            <ChevronRight className="text-gray-600" size={20} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+const InfoTab = () => (
+  <div className="p-4 pt-12 space-y-4">
+    <h1 className="text-4xl font-bold mb-6 text-gray-900">Festival Info</h1>
+    
+    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-6">
+      <h2 className="text-2xl font-bold mb-3 text-gray-900">Nature meets music</h2>
+      <p className="text-gray-800 leading-relaxed">
+        Visitors can spend the day enjoying music and food at the Piknik stage, or join a boat party that returns in time 
+        for the main programme at Medane Beach.
+      </p>
+    </div>
+
+    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-6">
+      <h2 className="text-2xl font-bold mb-3 text-gray-900">Regional meets global</h2>
+      <p className="text-gray-800 leading-relaxed">
+        Combining leading acts from Croatia, Serbia and Slovenia with established artists from Europe and beyond.
+      </p>
+    </div>
+
+    <div className="bg-white/40 backdrop-blur-xl rounded-3xl p-6">
+      <h2 className="text-2xl font-bold mb-3 text-gray-900">Sound & community</h2>
+      <p className="text-gray-800 leading-relaxed">
+        Crisp sound tuned by Slovenia's Boris Soundsystem. Community-driven workshops, talks and listening sessions.
+      </p>
+    </div>
+  </div>
+);
+
+const GalleryTab = () => {
+  const photos = [
+    "https://i.postimg.cc/zX6z1Qsk/000053.jpg",
+    "https://i.postimg.cc/T3vPDStw/000058.jpg",
+    "https://i.postimg.cc/C5fFZHDv/000051.jpg",
+    "https://i.postimg.cc/G3YtmdQp/bf-4998.jpg"
+  ];
+
+  return (
+    <div className="p-4 pt-12">
+      <h1 className="text-4xl font-bold mb-6 text-gray-900">Gallery</h1>
+      <div className="grid grid-cols-2 gap-4">
+        {photos.map((photo, i) => (
+          <div key={i} className="aspect-square rounded-2xl overflow-hidden shadow-lg">
+            <img src={photo} className="w-full h-full object-cover" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const NavButton = ({ icon: Icon, label, active, onClick }) => (
+  <button 
+    onClick={onClick}
+    className={`flex flex-col items-center gap-1 py-2 px-4 transition-colors ${
+      active ? 'text-blue-600' : 'text-gray-600'
+    }`}
+  >
+    <Icon size={24} />
+    <span className="text-xs font-medium">{label}</span>
+  </button>
+);
+
+const TicketModal = ({ onClose }) => {
+  const tickets = [
+    { type: "Early Bird", price: "€89", status: "Sold Out" },
+    { type: "General Sale", price: "€119", status: "Available" },
+    { type: "VIP Experience", price: "€199", status: "Available" }
+  ];
+
+  return (
+    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-end z-50">
+      <div className="bg-white rounded-t-3xl w-full max-h-[80vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Tickets</h2>
+          <button onClick={onClose} className="p-2">
+            <X size={24} />
+          </button>
+        </div>
+        <div className="p-4 space-y-4">
+          {tickets.map((ticket, i) => (
+            <div key={i} className="bg-gradient-to-br from-blue-50 to-yellow-50 rounded-2xl p-6 border">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <p className="text-sm font-bold text-gray-600 uppercase">{ticket.type}</p>
+                  <p className="text-4xl font-bold text-gray-900">{ticket.price}</p>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  ticket.status === 'Available' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                }`}>
+                  {ticket.status}
+                </span>
+              </div>
+              <ul className="space-y-2 mb-4 text-sm text-gray-700">
+                <li>• 4-Day Festival Pass</li>
+                <li>• Access to All Stages</li>
+                <li>• Boat Parties Included</li>
+              </ul>
+              <button 
+                disabled={ticket.status === 'Sold Out'}
+                className={`w-full py-3 rounded-xl font-bold ${
+                  ticket.status === 'Available' 
+                    ? 'bg-gray-900 text-white' 
+                    : 'bg-gray-300 text-gray-500'
+                }`}
+              >
+                {ticket.status === 'Available' ? 'Buy Now' : 'Sold Out'}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SurfFestivalApp;
